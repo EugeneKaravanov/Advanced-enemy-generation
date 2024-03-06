@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Spawn : MonoBehaviour
+public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private EnemyTarget _enemy;
     [SerializeField] private TargetMover _target;
@@ -15,11 +15,13 @@ public class Spawn : MonoBehaviour
 
     private IEnumerator SpawnEnemies(float _delay)
     {
+        var wait = new WaitForSeconds(_delay);
+
         while (true) 
         {
             var instantiatedEnemy = Instantiate(_enemy, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
-            instantiatedEnemy.GetComponent<EnemyTarget>().SetTarget(_target);
-            yield return new WaitForSeconds(_delay);
+            instantiatedEnemy.SetTarget(_target);
+            yield return wait;
         }
     }
 }
